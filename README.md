@@ -1,59 +1,100 @@
-# MlVisualizer
+# Machine Learning Classroom
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+An interactive, step-by-step visual sandbox built with **Angular** and **Plotly.js**. This application is designed specifically as an educational tool to help students intuitively bridge the gap between abstract machine learning algorithms, live coordinate geometry, and dynamic algebraic equations.
 
-## Development server
+Instead of hiding training inside automated high-speed loops, this sandbox utilizes a **manual execution engine**. Every click of the step button processes exactly one data point, letting students see the immediate, frame-by-frame impact of individual data points on lines, curves, margins, and probabilities.
 
-To start a local development server, run:
+---
 
+## 🚀 Features & Learning Paradigms
+
+This application hosts six distinct classic algorithms split across three primary learning domains:
+
+### 1. Continuous Regression
+
+* **Linear Regression:** Visualizes Mean Squared Error (MSE) optimization. Watch the slope ($w_1$) and intercept ($b$) twist a straight line to fit a feature trend.
+* **Polynomial Regression:** Demonstrates non-linear feature space expansions. Shows how a quadratic coefficient ($w_2$) curves a model to capture parabolic data trends.
+
+### 2. Parametric Linear Classification
+
+* **Perceptron Classifier:** The foundational binary neural node. Explicitly illustrates the Perceptron Learning Rule, where parameters shift *only* when the golden focus star marks a misclassified point.
+* **Logistic Regression:** Explains probabilistic log-odds using the Sigmoid activation function ($\sigma$). Watch a smooth gradient probability field slide into place.
+
+### 3. Non-Parametric & Generative Learning
+
+* **Naive Bayes:** Demonstrates Gaussian conditional density tracking. Instead of traditional boundaries, it visually computes class conditional centroids and variance spheres around data.
+* **K-Nearest Neighbors (KNN):** Illustrates instance-based "lazy" inference. Shows that no weights are optimized; instead, classifications are determined dynamically by checking local neighborhood clusters.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+* **Framework:** Angular (v17+ architecture utilizing non-standalone modular structures)
+* **Visual Graphic Engine:** Plotly.js (Optimized via dynamic client-side injections to guarantee full Server-Side Rendering compatibility)
+* **State Control:** Strict data bindings via `FormsModule` for real-time hyperparameter tweaks.
+
+---
+
+## 💻 Installation & Quick Start
+
+### Prerequisites
+
+Make sure you have the [Node.js runtime environment](https://nodejs.org/) and the [Angular CLI](https://angular.dev/tools/cli) installed globally on your machine.
+
+### Setup Instructions
+
+1. **Clone the workspace repository:**
+```bash
+git clone https://github.com/philipszdavido/ml-visualizer.git
+cd ml-visualizer
+
+```
+
+
+2. **Install the required dependencies:**
+```bash
+npm install
+
+```
+
+
+3. **Compile and serve the application locally:**
 ```bash
 ng serve
+
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+4. **Open your browser:**
+   Navigate to `http://localhost:4200` to launch the interactive workspace dashboard.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🏫 How to Use This for Teaching (Lesson Plan Ideas)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+This application is optimized for screen-sharing during lectures or for hands-on lab sessions. Here is a recommended teaching workflow:
 
-```bash
-ng generate --help
-```
+### Step 1: The Initial Zero State
 
-## Building
+Load any algorithm (e.g., *Perceptron*). Point out that on initialization, the dataset loads but **no model lines are drawn**, and the weights are empty ($0x_1 + 0x_2 - 0 = 0$). This highlights that the model knows absolutely nothing prior to training.
 
-To build the project run:
+### Step 2: Tracking the Focus Star
 
-```bash
-ng build
-```
+Draw attention to the **Golden Star Marker** on the chart. Explain that this represents the current feature sample vector loaded into the processor memory cache, waiting to be evaluated.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Step 3: Triggering a Micro-Update
 
-## Running unit tests
+Click **"Step Forward"**.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+* If the focus point is already correctly classified, show the students that the weights barely change (or don't change at all).
+* If the point is misclassified, watch the line physically twitch or pivot toward the point. Have students track the **Parametric Weights Vector table** to see the numbers change in real-time alongside the geometry.
 
-```bash
-ng test
-```
+### Step 4: Observing Convergence
 
-## Running end-to-end tests
+As you continuously click the step button, have students watch the **Loss Trend Value graph** at the bottom. Point out how the loss spikes when the model makes mistakes, but gradually trends downward as the line or curve stabilizes.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 📄 License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This educational sandbox project is open-source and available under the **MIT License**. Feel free to fork, adapt, and expand it for your classrooms!
