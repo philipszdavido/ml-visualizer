@@ -9,6 +9,6 @@ export default `<!doctype html>
 <link rel="stylesheet" href="styles-5INURTSO.css"></head>
 <body ngcm="">
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-IMPBB4AK.js"><script src="main-N3C6QZAZ.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-IMPBB4AK.js"><script src="main-3ZXYXUC4.js" type="module"></script></body>
 </html>
 `;

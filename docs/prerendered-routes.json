@@ -1,5 +1,7 @@
 {
   "routes": {
-    "/ml-visualizer": {}
+    "/ml-visualizer": {},
+    "/ml-visualizer/embed-sim": {},
+    "/ml-visualizer/ml-sandbox": {}
   }
 }
