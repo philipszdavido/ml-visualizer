@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
 })
 export class App implements OnInit {
-
   selectedModel: string = 'kmeans';
   numSamples: number = 40;
   learningRate: number = 0.1;
@@ -62,7 +61,6 @@ export class App implements OnInit {
     this.currentSampleIndex = 0;
 
     if (this.selectedModel === 'kmeans') {
-
       for (let i = 0; i < this.numSamples; i++) {
         const r = Math.random();
         if (r < 0.33) this.X.push([this.randomNormal(-2, 0.5), this.randomNormal(-2, 0.5)]);
@@ -79,7 +77,6 @@ export class App implements OnInit {
       this.clusterAssignments = new Array(this.numSamples).fill(-1);
       this.kmeansPhase = 'assign';
     } else if (this.selectedModel === 'decisiontree') {
-
       for (let i = 0; i < this.numSamples; i++) {
         const x1 = Math.random() * 8 - 4;
         const x2 = Math.random() * 8 - 4;
@@ -88,7 +85,6 @@ export class App implements OnInit {
       }
       this.treeSplitValue = -2;
     } else if (this.selectedModel === 'neural') {
-
       for (let i = 0; i < this.numSamples; i++) {
         const x1 = Math.random() * 6 - 3;
         const x2 = Math.random() * 6 - 3;
@@ -109,7 +105,6 @@ export class App implements OnInit {
     switch (this.selectedModel) {
       case 'kmeans': {
         if (this.kmeansPhase === 'assign') {
-
           for (let i = 0; i < this.X.length; i++) {
             let minD = Infinity;
             let closest = 0;
@@ -127,7 +122,6 @@ export class App implements OnInit {
           this.lossHistory.push(this.calculateWCSS());
           this.kmeansPhase = 'update';
         } else {
-
           for (let c = 0; c < this.centroids.length; c++) {
             const assignedPoints = this.X.filter((_, idx) => this.clusterAssignments[idx] === c);
             if (assignedPoints.length > 0) {
@@ -144,14 +138,12 @@ export class App implements OnInit {
         break;
       }
       case 'decisiontree': {
-
         this.treeSplitValue += 0.4;
         if (this.treeSplitValue > 3) this.treeSplitValue = -3;
         this.lossHistory.push(this.calculateTreeEntropy());
         break;
       }
       case 'neural': {
-
         const xi = this.X[this.currentSampleIndex];
         const yi = this.y[this.currentSampleIndex];
         const net = this.wNN[0] * xi[0] + this.wNN[1] * xi[1] + this.bNN;

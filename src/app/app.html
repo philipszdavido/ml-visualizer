@@ -1,7 +1,7 @@
 <div class="app-container">
   <header class="navbar">
     <div class="brand">
-      <h1>🔬 Advanced Multi-Model ML Sandbox</h1>
+      <h1>Advanced Multi-Model ML Sandbox</h1>
       <p>Interactive step-by-step algorithms engine for structural analysis and validation.</p>
     </div>
     <div class="selector-box">
@@ -16,23 +16,33 @@
 
   <div class="workspace-grid">
     <aside class="control-panel">
-      <h3>🛠️ Hyperparameters</h3>
+      <h3>Hyperparameters</h3>
       <div class="control-group">
         <label>Samples Pool Batch: {{ numSamples }}</label>
         <input type="range" min="20" max="100" step="10" [(ngModel)]="numSamples" (change)="initializeDataset()">
       </div>
-      <div class="control-group" *ngIf="selectedModel === 'neural'">
+
+      @if(selectedModel === 'neural') {
+      <div class="control-group">
         <label>Backprop Learning Rate (η)</label>
         <input type="number" step="0.01" [(ngModel)]="learningRate">
       </div>
-      <button class="reset-btn" (click)="initializeDataset()">🔄 Reset Initial Weights State</button>
+      }
+      <button class="reset-btn" (click)="initializeDataset()">Reset Initial Weights State</button>
     </aside>
 
     <main class="visualization-arena">
       <div class="action-dock">
         <button class="action-btn" (click)="trainOneStep()">
-          <span *ngIf="selectedModel === 'kmeans'">⚡ Step Optimization Phase (Toggle Assign/Update)</span>
-          <span *ngIf="selectedModel !== 'kmeans'">⚡ Step Optimization Phase (Process Iteration Edge)</span>
+
+          @if(selectedModel === 'kmeans') {
+            <span>Step Optimization Phase (Toggle Assign/Update)</span>
+          }
+
+          @if(selectedModel !== 'kmeans') {
+            <span>Step Optimization Phase (Process Iteration Edge)</span>
+          }
+
         </button>
         <div class="telemetry">
           <span>Executed Steps Counter: <strong>{{ totalStepsTaken }}</strong></span>
@@ -41,21 +51,25 @@
 
       <div class="display-split">
         <div class="structural-math">
-          <h3>📐 Dynamic Math Equation / Node Rule</h3>
+          <h3>Dynamic Math Equation / Node Rule</h3>
           <div class="latex-card">
             <code>{{ equationString }}</code>
           </div>
 
-          <h3>📊 Calculated State Variables Matrix</h3>
+          <h3>Calculated State Variables Matrix</h3>
           <table class="metric-table">
             <thead>
             <tr><th>Variable Identity Attribute</th><th>Calculated Value Matrix</th></tr>
             </thead>
             <tbody>
-            <tr *ngFor="let row of metricsTable">
+
+            @for(row of metricsTable; track $index) {
+            <tr>
               <td><strong>{{ row.name }}</strong></td>
               <td><code>{{ row.value }}</code></td>
             </tr>
+            }
+
             </tbody>
           </table>
         </div>
