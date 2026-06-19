@@ -1,0 +1,62 @@
+<div class="app-container">
+  <header>
+    <h1>🎓 Step-by-Step SVM Teacher</h1>
+    <p>Watch how processing data points one by one updates the boundary weights and geometric margins.</p>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <h3>Model Configuration</h3>
+      <div class="input-group">
+        <label>Samples: {{ numSamples }}</label>
+        <input type="range" min="10" max="100" step="10" [(ngModel)]="numSamples" (change)="resetSimulation()">
+      </div>
+      <div class="input-group">
+        <label>Learning Rate (η)</label>
+        <input type="number" step="0.01" [(ngModel)]="learningRate">
+      </div>
+      <div class="input-group">
+        <label>Regularization Penalty (C)</label>
+        <input type="number" step="0.1" [(ngModel)]="C">
+      </div>
+      <button class="regen-btn" (click)="resetSimulation()">Reset / Clear Weights</button>
+    </aside>
+
+    <main class="dashboard">
+      <section class="action-bar">
+        <button class="step-btn" (click)="trainOneStep()">Train Next Step (Process 1 Sample)</button>
+        <div class="status-pill">
+          <span>Total Micro-Steps Taken: <strong>{{ totalStepsTaken }}</strong></span>
+          <span style="margin-left: 20px;">Current Dataset Pointer Index: <strong>{{ currentSampleIndex }}</strong></span>
+        </div>
+      </section>
+
+      <div class="main-grid">
+        <div class="math-panel">
+          <h3>Boundary Equation</h3>
+          <div class="equation-box">
+            <code>
+              {{ w[0] | number:'1.2-2' }}x₁ +
+              {{ w[1] | number:'1.2-2' }}x₂ -
+              ({{ b | number:'1.2-2' }}) = 0
+            </code>
+          </div>
+
+          <h3>Feature Vectors & Parameters</h3>
+          <table>
+            <tr><th>Variable</th><th>Current Value</th></tr>
+            <tr><td>Weight 1 (w₁)</td><td><code>{{ w[0] | number:'1.4-4' }}</code></td></tr>
+            <tr><td>Weight 2 (w₂)</td><td><code>{{ w[1] | number:'1.4-4' }}</code></td></tr>
+            <tr><td>Bias offset (b)</td><td><code>{{ b | number:'1.4-4' }}</code></td></tr>
+            <tr><td>Total Loss</td><td><code>{{ totalStepsTaken === 0 ? 'N/A' : (currentLoss | number:'1.4-4') }}</code></td></tr>
+          </table>
+        </div>
+
+        <div class="plots-panel">
+          <div id="svmPlot"></div>
+          <div id="lossPlot"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

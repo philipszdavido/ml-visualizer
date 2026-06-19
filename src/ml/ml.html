@@ -1,0 +1,73 @@
+<div class="app-container">
+  <header class="navbar">
+    <div class="brand">
+      <h1>Interactive Multi-Model ML Sandbox</h1>
+      <p>A step-by-step mathematical learning tool for regression and classification models.</p>
+    </div>
+    <div class="selector-box">
+      <label for="modelSelect"><strong>Select Target Algorithm:</strong></label>
+      <select id="modelSelect" [(ngModel)]="selectedModel" (change)="onModelChange()">
+        <option value="linear">Linear Regression (Continuous MSE)</option>
+        <option value="poly">Polynomial Regression (Nonlinear Feature Space)</option>
+        <option value="logistic">Logistic Regression (Probabilistic Log-Odds)</option>
+        <option value="perceptron">Perceptron Classifier (Binary Neural Node)</option>
+        <option value="knn">K-Nearest Neighbors (Instance-Based Lazy Inference)</option>
+        <option value="naivebayes">Naive Bayes Classifier (Gaussian Conditional Density)</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="workspace-grid">
+    <aside class="control-panel">
+      <h3>Hyperparameters</h3>
+      <div class="control-group">
+        <label>Data Batch Size: {{ numSamples }}</label>
+        <input type="range" min="20" max="100" step="10" [(ngModel)]="numSamples" (change)="initializeDataset()">
+      </div>
+      <div class="control-group">
+        <label>Optimization Learning Rate (η)</label>
+        <input type="number" step="0.01" [(ngModel)]="learningRate">
+      </div>
+      <button class="reset-btn" (click)="initializeDataset()">Reset Weights & Clear Plots</button>
+    </aside>
+
+    <main class="visualization-arena">
+      <div class="action-dock">
+        <button class="action-btn" (click)="trainOneStep()">Step Forward (Process 1 Data Point)</button>
+        <div class="telemetry">
+          <span>Evaluated Sample Counter: <strong>{{ totalStepsTaken }}</strong></span>
+          <span style="margin-left: 20px;">Buffer Focus Pointer: <strong>{{ currentSampleIndex }}</strong></span>
+        </div>
+      </div>
+
+      <div class="display-split">
+        <div class="structural-math">
+          <h3>Dynamic Math Equation</h3>
+          <div class="latex-card">
+            <code>{{ equationString }}</code>
+          </div>
+
+          <h3>Parametric Weights Vector</h3>
+          <table class="metric-table">
+            <thead>
+              <tr><th>Variable Attribute</th><th>Calculated Scalar Value</th></tr>
+            </thead>
+            <tbody>
+              @for(row of metricsTable; track $index) {
+              <tr>
+                <td><strong>{{ row.name }}</strong></td>
+                <td><code>{{ row.value }}</code></td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="canvas-dock">
+          <div id="modelPlot"></div>
+          <div id="lossPlot"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
