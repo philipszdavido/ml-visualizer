@@ -1,12 +1,14 @@
 # Machine Learning Classroom
 
+[Live here](https://philipszdavido.github.io/ml-visualizer/)
+
 An interactive, step-by-step visual sandbox built with **Angular** and **Plotly.js**. This application is designed specifically as an educational tool to help students intuitively bridge the gap between abstract machine learning algorithms, live coordinate geometry, and dynamic algebraic equations.
 
 Instead of hiding training inside automated high-speed loops, this sandbox utilizes a **manual execution engine**. Every click of the step button processes exactly one data point, letting students see the immediate, frame-by-frame impact of individual data points on lines, curves, margins, and probabilities.
 
 ---
 
-## 🚀 Features & Learning Paradigms
+## Features & Learning Paradigms
 
 This application hosts six distinct classic algorithms split across three primary learning domains:
 
@@ -27,7 +29,7 @@ This application hosts six distinct classic algorithms split across three primar
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 * **Framework:** Angular (v17+ architecture utilizing non-standalone modular structures)
 * **Visual Graphic Engine:** Plotly.js (Optimized via dynamic client-side injections to guarantee full Server-Side Rendering compatibility)
@@ -35,7 +37,7 @@ This application hosts six distinct classic algorithms split across three primar
 
 ---
 
-## 💻 Installation & Quick Start
+## Installation & Quick Start
 
 ### Prerequisites
 
@@ -70,7 +72,7 @@ ng serve
 
 ---
 
-## 🏫 How to Use This for Teaching (Lesson Plan Ideas)
+## How to Use This for Teaching (Lesson Plan Ideas)
 
 This application is optimized for screen-sharing during lectures or for hands-on lab sessions. Here is a recommended teaching workflow:
 
@@ -95,6 +97,6 @@ As you continuously click the step button, have students watch the **Loss Trend 
 
 ---
 
-## 📄 License
+## License
 
 This educational sandbox project is open-source and available under the **MIT License**. Feel free to fork, adapt, and expand it for your classrooms!
