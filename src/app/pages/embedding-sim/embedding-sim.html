@@ -1,0 +1,168 @@
+<div class="dashboard-container">
+  <header class="header">
+    <h1>Tiny Embedding Engine Visualizer</h1>
+    <p class="subtitle">Tracking backpropagation mechanics and live spatial adjustment mapping: <code>dog &rarr; ball</code></p>
+  </header>
+
+  <section class="control-panel">
+    <div class="stat-badge">
+      <span class="label">Step Count</span>
+      <span class="value">{{ epochCount }}</span>
+    </div>
+    <div class="stat-badge">
+      <span class="label">Current Loss</span>
+      <span class="value loss-val">{{ metrics?.loss?.toFixed(5) }}</span>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" (click)="runSingleStep()">Execute Next Step</button>
+      <button class="btn btn-secondary" (click)="resetSimulation()">Reset</button>
+    </div>
+  </section>
+
+  <div class="grid-layout">
+    <div class="card map-card">
+      <h3>2D Embedding Latent Space</h3>
+      <div class="svg-wrapper">
+        <svg viewBox="0 0 300 300" class="coordinate-plane">
+          <line x1="0" y1="150" x2="300" y2="150" stroke="#e2e8f0" stroke-width="1" />
+          <line x1="150" y1="0" x2="150" y2="300" stroke="#e2e8f0" stroke-width="1" />
+
+          <g *ngFor="let item of vocab; let i = index">
+            <circle
+              [attr.cx]="getSvgX(embeddings[i][0])"
+              [attr.cy]="getSvgY(embeddings[i][1])"
+              r="6"
+              [ngClass]="{'active-in': item === 'dog', 'active-out': item === 'ball', 'neutral': item === 'puppy'}"
+            />
+            <text
+              [attr.x]="getSvgX(embeddings[i][0]) + 10"
+              [attr.y]="getSvgY(embeddings[i][1]) + 4"
+              class="node-label">
+              {{ item }} ({{ embeddings[i][0].toFixed(2) }}, {{ embeddings[i][1].toFixed(2) }})
+            </text>
+          </g>
+        </svg>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="dot active-in"></span> Input Vector (dog)</span>
+        <span class="legend-item"><span class="dot active-out"></span> Target Vector (ball)</span>
+        <span class="legend-item"><span class="dot neutral"></span> Unchanged (puppy)</span>
+      </div>
+    </div>
+
+    <div class="card table-card">
+      <h3>Current Parameter Matrices</h3>
+
+      <h4>Embedding Matrix (E)</h4>
+      <table class="data-table">
+        <thead>
+        <tr><th>Token</th><th>Dim 0 (X)</th><th>Dim 1 (Y)</th></tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of vocab; let i = index" [ngClass]="{'row-highlight': item === 'dog'}">
+          <td><strong>{{ item }}</strong></td>
+          <td>{{ embeddings[i][0].toFixed(5) }}</td>
+          <td>{{ embeddings[i][1].toFixed(5) }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h4>Output Weight Matrix (W)</h4>
+      <table class="data-table">
+        <thead>
+        <tr><th>Target Word Vector</th><th>Weight 0</th><th>Weight 1</th></tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of vocab; let i = index" [ngClass]="{'row-highlight': item === 'ball'}">
+          <td>Predictions for <strong>{{ item }}</strong></td>
+          <td>{{ W[i][0].toFixed(5) }}</td>
+          <td>{{ W[i][1].toFixed(5) }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<!--  <section class="card trace-card" *ngIf="metrics">-->
+<!--    <h3>Math Computation Trace (Last Evaluated Matrix Flow)</h3>-->
+<!--    <div class="trace-grid">-->
+<!--      <div>-->
+<!--        <h5>1. Forward Pass Logits</h5>-->
+<!--        <p class="formula">$$W \cdot x$$</p>-->
+<!--        <ul>-->
+<!--          <li *ngFor="let item of vocab; let i = index">-->
+<!--            {{ item }}: <code>{{ metrics.logits[i].toFixed(4) }}</code>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <h5>2. Softmax Probabilities</h5>-->
+<!--        <p class="formula">$$\sigma(z)_i$$</p>-->
+<!--        <ul>-->
+<!--          <li *ngFor="let item of vocab; let i = index" [ngClass]="{'txt-success': item === 'ball'}">-->
+<!--            {{ item }}: <strong>{{ (metrics.probs[i] * 100).toFixed(2) }}%</strong>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <h5>3. Logit Gradients ($\frac{\partial L}{\partial z}$)</h5>-->
+<!--        <p class="formula">$$P - Y$$</p>-->
+<!--        <ul>-->
+<!--          <li *ngFor="let item of vocab; let i = index">-->
+<!--            {{ item }}: <code>{{ metrics.gradLogits[i].toFixed(4) }}</code>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <h5>4. Input Embedding Updates ($\Delta E_{dog}$)</h5>-->
+<!--        <p class="formula">$$W^T \cdot \frac{\partial L}{\partial z}$$</p>-->
+<!--        <p>Grad Vector: <code>[{{ metrics.gradEmbedding[0].toFixed(4) }}, {{ metrics.gradEmbedding[1].toFixed(4) }}]</code></p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+
+  <section class="card trace-card" *ngIf="metrics">
+    <h3>Math Computation Trace (Last Evaluated Matrix Flow)</h3>
+    <div class="trace-grid">
+      <div>
+        <h5>1. Forward Pass Logits</h5>
+        <p class="formula">$$W \cdot x$$</p>
+        <ul>
+          <li *ngFor="let item of vocab; let i = index">
+            {{ item }}: <code>{{ metrics.logits[i].toFixed(4) }}</code>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>2. Softmax Probabilities</h5>
+        <p class="formula">$$\sigma(z)_i$$</p>
+        <ul>
+          <li *ngFor="let item of vocab; let i = index" [ngClass]="{'txt-success': item === 'ball'}">
+            {{ item }}: <strong>{{ (metrics.probs[i] * 100).toFixed(2) }}%</strong>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>3. Logit Gradients ($\frac{{'{'}}\partial L{{'}{'}}\partial z{{'}'}}$)</h5>
+        <p class="formula">$$P - Y$$</p>
+        <ul>
+          <li *ngFor="let item of vocab; let i = index">
+            {{ item }}: <code>{{ metrics.gradLogits[i].toFixed(4) }}</code>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>4. Input Embedding Updates ($\Delta E_{{ '{' }}dog{{ '}' }}$)</h5>
+        <p class="formula">$$W^T \cdot \frac{{ '{' }}\partial L{{ '}' }}{{ '{' }}\partial z{{ '}' }}$$</p>
+        <p>Grad Vector: <code>[{{ metrics.gradEmbedding[0].toFixed(4) }}, {{ metrics.gradEmbedding[1].toFixed(4) }}]</code></p>
+      </div>
+    </div>
+  </section>
+
+</div>

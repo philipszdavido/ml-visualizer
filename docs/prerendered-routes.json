@@ -1,7 +1,14 @@
 {
   "routes": {
     "/ml-visualizer": {},
-    "/ml-visualizer/embed-sim": {},
-    "/ml-visualizer/ml-sandbox": {}
+    "/ml-visualizer/models/knn-classifier": {},
+    "/ml-visualizer/models/linear-regression": {},
+    "/ml-visualizer/models/linear-svm": {},
+    "/ml-visualizer/models/logistic-regression": {},
+    "/ml-visualizer/models/naive-bayes": {},
+    "/ml-visualizer/models/peceptron-classifier": {},
+    "/ml-visualizer/models/polynomial-regression": {},
+    "/ml-visualizer/models/tiny-embedding-sim": {},
+    "/ml-visualizer/models/train-linear-svm": {}
   }
 }

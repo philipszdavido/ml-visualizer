@@ -6,9 +6,9 @@ export default `<!doctype html>
   <base href="/ml-visualizer/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles-5INURTSO.css"></head>
+<link rel="stylesheet" href="styles-4QNODCWM.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-4QNODCWM.css"></noscript></head>
 <body ngcm="">
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-IMPBB4AK.js"><script src="main-3ZXYXUC4.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-BYJBFXXY.js"><link rel="modulepreload" href="chunk-EVW2GDYJ.js"><link rel="modulepreload" href="chunk-C6Q5SG76.js"><script src="main-IYGLNKD5.js" type="module"></script></body>
 </html>
 `;
