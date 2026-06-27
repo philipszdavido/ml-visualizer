@@ -1,9 +1,20 @@
 import { Routes } from '@angular/router';
+import { Home } from './pages/home/home';
+import { AttentionVisual } from './pages/attention-visual/attention-visual';
 
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+  },
+  {
+    path: 'models/attention',
+    component: AttentionVisual,
+  },
+  {
+    path: 'back-prop',
+    loadComponent: () =>
+      import('./pages/backprop-graph.component/backprop-graph.component').then((m) => m.BackpropGraphComponent),
   },
   {
     path: 'models/linear-regression',

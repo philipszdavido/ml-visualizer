@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Chart, ScatterController, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 
 interface StepMetrics {
   epoch: number;
@@ -22,6 +23,9 @@ interface StepMetrics {
   styleUrl: './embedding-sim.css',
 })
 export class EmbeddingSimComponent {
+  @ViewChild('embeddingChart') chartCanvas!: ElementRef<HTMLCanvasElement>;
+  chart!: Chart;
+
   vocab = ['dog', 'puppy', 'ball'];
   tokenToId: Record<string, number> = { dog: 0, puppy: 1, ball: 2 };
   embeddingSize = 2;
@@ -45,6 +49,59 @@ export class EmbeddingSimComponent {
 
   constructor() {
     this.computeInitialMetrics();
+  }
+
+  ngAfterViewInit() {
+    // Chart.register(ScatterController, LinearScale, PointElement, Tooltip, Legend);
+
+    this.initChart();
+  }
+
+  initChart() {
+    this.chart = new Chart(this.chartCanvas.nativeElement, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Embeddings Space',
+            data: this.getChartData(),
+            pointBackgroundColor: ['#3b82f6', '#64748b', '#10b981'], // dog, puppy, ball colors
+            pointRadius: 8,
+            pointHoverRadius: 10,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { min: -1.5, max: 1.5, grid: { color: '#e2e8f0' } },
+          y: { min: -1.5, max: 1.5, grid: { color: '#e2e8f0' } },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const xVal = ctx.parsed?.x ?? 0;
+                const yVal = ctx.parsed?.y ?? 0;
+                return `${this.vocab[ctx.dataIndex]}: (${xVal.toFixed(2)}, ${yVal.toFixed(2)})`;
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  getChartData() {
+    return this.embeddings.map((e) => ({ x: e[0], y: e[1] }));
+  }
+
+  updateChartSpace() {
+    if (this.chart) {
+      this.chart.data.datasets[0].data = this.getChartData();
+      this.chart.update('none'); // Fast manual render update frame step
+    }
   }
 
   computeInitialMetrics() {
@@ -107,6 +164,8 @@ export class EmbeddingSimComponent {
       gradEmbedding,
       gradW,
     };
+
+    this.updateChartSpace();
   }
 
   resetSimulation() {
@@ -122,6 +181,7 @@ export class EmbeddingSimComponent {
       [0.7, 0.3],
     ];
     this.computeInitialMetrics();
+    this.updateChartSpace();
   }
 
   matVecMul(matrix: number[][], vector: number[]): number[] {

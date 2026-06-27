@@ -237,3 +237,12 @@ code {
   max-width: 100%;
   fill: #0f172a;
 }
+
+.chart-wrapper {
+  position: relative;
+  height: 320px;
+  width: 100%;
+  background: #ffffff;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
