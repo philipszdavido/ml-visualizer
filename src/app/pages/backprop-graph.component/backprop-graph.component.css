@@ -1,0 +1,326 @@
+.node-pulse {
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* Layout Wrapper Container */
+.backprop-container {
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #fafbfc;
+  border-radius: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Text Blocks */
+.backprop-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 20px;
+}
+
+.backprop-header h1 {
+  font-size: 28px;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+}
+
+.backprop-header p {
+  font-size: 14px;
+  color: #2563eb;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Range Slider Element Layout */
+.slider-control-card {
+  max-width: 600px;
+  margin: 20px auto 0 auto;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.slider-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.custom-range-input {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider-labels-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.active-step-indicator {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* Main Dashboard Canvas Setup Grid */
+.dashboard-canvas {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  gap: 24px;
+  min-height: 650px;
+}
+
+/* Informational Calculation Sidebar Blocks */
+.sidebar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blue-calc-card {
+  background-color: #38bdf8;
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2);
+  font-size: 12px;
+}
+
+.blue-calc-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+.formula-block {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6px;
+  border-radius: 4px;
+  margin: 4px 0;
+  word-break: break-all;
+}
+
+.evaluation-highlight {
+  font-weight: bold;
+  color: #fef08a;
+  margin-top: 6px;
+}
+
+/* Objective White/Red Static Blocks */
+.objective-card {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 12px;
+}
+
+.objective-card h3 {
+  margin: 0 0 8px 0;
+  color: #334155;
+  font-size: 14px;
+}
+
+.active-loss-state {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+/* Structural Neural Net Graphical Graph Mapping */
+.network-graph-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Layer Alignment Node Columns */
+.layer-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  z-index: 5;
+}
+
+.input-spacing { gap: 140px; }
+.hidden-spacing { gap: 100px; }
+
+/* Node Base Circle Architecture Styles */
+.node-circle {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.input-node { background-color: #ec4899; }
+.hidden1-node { background-color: #16a34a; }
+.hidden2-node { background-color: #0ea5e9; }
+.output-node { background-color: #dc2626; width: 85px; height: 85px; }
+
+.node-subtext {
+  font-size: 9px;
+  font-family: monospace;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* Step-Based Interactive Opacity Modifiers */
+.dimmed-layer {
+  opacity: 0.25;
+  pointer-events: none;
+  filter: grayscale(40%);
+  transition: all 0.4s ease;
+}
+
+/* Activation Dynamic Pulse Animation */
+.gradient-active-pulse {
+  animation: backpropPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes backpropPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { transform: scale(1.04); box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+
+
+
+
+
+/* Core Structural Extensions to add into your existing stylesheet */
+
+.network-graph-panel {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 60px 20px 20px 20px; /* Leave top headroom for the layer labels */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 520px;
+}
+
+/* Layer Labels Alignment Header Across the Canvas Top Boundary Axis */
+.layer-axis-labels {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 35px;
+  pointer-events: none;
+}
+
+.axis-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  background-color: #f8fafc;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+/* SVG Path Overlay Base Engine */
+.network-svg-layer {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.network-svg-layer line {
+  stroke: #cbd5e1;
+  stroke-width: 2;
+  transition: all 0.4s ease;
+}
+
+.weight-label {
+  font-size: 10px;
+  font-family: monospace;
+  font-weight: 700;
+  fill: #64748b;
+  text-anchor: middle;
+  background: white;
+  transition: all 0.4s ease;
+}
+
+/* SVG Reactive Highlight Classes Linked to Slider Variables */
+.svg-dimmed line {
+  stroke: #f1f5f9 !important;
+  opacity: 0.3;
+}
+
+.svg-dimmed text {
+  fill: #cbd5e1 !important;
+  opacity: 0.2;
+}
+
+.svg-active line {
+  stroke: #3b82f6 !important;
+  stroke-width: 3.5;
+}
+
+.svg-active text {
+  fill: #1d4ed8 !important;
+  font-weight: 800;
+  font-size: 11px;
+}

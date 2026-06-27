@@ -1,0 +1,168 @@
+<div class="backprop-container">
+
+  <div class="backprop-header">
+    <h1>Mathematics of Neural Network Back-propagation</h1>
+    <p>Interactive Computational Engine — Engine Architecture by Nnamdi Chidume</p>
+
+    <div class="slider-control-card">
+      <span class="slider-label">Scrub Backwards Through Computation Time</span>
+      <input type="range" min="0" max="4" [(ngModel)]="currentStep" class="custom-range-input">
+      <div class="slider-labels-row">
+        <span [class.active-step-indicator]="currentStep === 0">0. Forward Pass</span>
+        <span [class.active-step-indicator]="currentStep === 1">1. Loss (∂L/∂pred)</span>
+        <span [class.active-step-indicator]="currentStep === 2">2. Layer 2 Weights</span>
+        <span [class.active-step-indicator]="currentStep === 3">3. Layer 1 Nodes</span>
+        <span [class.active-step-indicator]="currentStep === 4">4. Input Weights</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-canvas">
+
+    <div class="sidebar-column" [class.dimmed-layer]="currentStep < 4">
+      <div class="blue-calc-card">
+        <h4>How much does w10 contribute to L?</h4>
+        <div class="formula-block">∂L/∂w10 = ((∂L/∂pred • w1 • wh11) + (∂L/∂pred • w2 • wh12)) • x1</div>
+        <div class="evaluation-highlight">Grad: {{ dL_dw10 | number:'1.6-6' }}</div>
+      </div>
+
+      <div class="blue-calc-card">
+        <h4>How much does w11 contribute to L?</h4>
+        <div class="formula-block">∂L/∂w11 = ((∂L/∂pred • w1 • wh21) + (∂L/∂pred • w2 • wh22)) • x1</div>
+        <div class="evaluation-highlight">Grad: {{ dL_dw11 | number:'1.6-6' }}</div>
+      </div>
+
+      <div class="blue-calc-card">
+        <h4>How much does w12 contribute to L?</h4>
+        <div class="formula-block">∂L/∂w12 = ((∂L/∂pred • w1 • wh11) + (∂L/∂pred • w2 • wh12)) • x2</div>
+        <div class="evaluation-highlight">Grad: {{ dL_dw12 | number:'1.6-6' }}</div>
+      </div>
+
+      <div class="blue-calc-card">
+        <h4>How much does w13 contribute to L?</h4>
+        <div class="formula-block">∂L/∂w13 = ((∂L/∂pred • w2 • wh22) + (∂L/∂pred • w1 • wh21)) • x2</div>
+        <div class="evaluation-highlight">Grad: {{ dL_dw13 | number:'1.6-6' }}</div>
+      </div>
+    </div>
+
+    <div class="network-graph-panel">
+
+      <div class="layer-axis-labels">
+        <span class="axis-title">Input Layer</span>
+        <span class="axis-title">Hidden Layer 1</span>
+        <span class="axis-title">Hidden Layer 2</span>
+        <span class="axis-title">Output Layer</span>
+      </div>
+
+      <svg class="network-svg-layer" viewBox="0 0 600 500" width="100%" height="100%">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#cbd5e1" />
+          </marker>
+          <marker id="arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b82f6" />
+          </marker>
+        </defs>
+
+        <g [class.svg-dimmed]="currentStep > 0 && currentStep < 4" [class.svg-active]="currentStep === 4">
+          <line x1="60" y1="150" x2="200" y2="150" marker-end="url(#arrow)" />
+          <text x="110" y="140" class="weight-label">w10 = {{w10}}</text>
+
+          <line x1="60" y1="150" x2="200" y2="330" marker-end="url(#arrow)" />
+          <text x="100" y="220" class="weight-label">w11 = {{w11}}</text>
+
+          <line x1="60" y1="350" x2="200" y2="170" marker-end="url(#arrow)" />
+          <text x="100" y="280" class="weight-label">w12 = {{w12}}</text>
+
+          <line x1="60" y1="350" x2="200" y2="350" marker-end="url(#arrow)" />
+          <text x="110" y="370" class="weight-label">w13 = {{w13}}</text>
+        </g>
+
+        <g [class.svg-dimmed]="currentStep !== 0 && currentStep !== 2" [class.svg-active]="currentStep === 2">
+          <line x1="260" y1="150" x2="400" y2="150" marker-end="url(#arrow)" />
+          <text x="310" y="140" class="weight-label">wh11 = {{wh11}}</text>
+
+          <line x1="260" y1="150" x2="400" y2="330" marker-end="url(#arrow)" />
+          <text x="300" y="220" class="weight-label">wh12 = {{wh12}}</text>
+
+          <line x1="260" y1="350" x2="400" y2="170" marker-end="url(#arrow)" />
+          <text x="300" y="280" class="weight-label">wh21 = {{wh21}}</text>
+
+          <line x1="260" y1="350" x2="400" y2="350" marker-end="url(#arrow)" />
+          <text x="310" y="370" class="weight-label">wh22 = {{wh22}}</text>
+        </g>
+
+        <g [class.svg-dimmed]="currentStep !== 0 && currentStep !== 2" [class.svg-active]="currentStep === 2">
+          <line x1="460" y1="150" x2="540" y2="230" marker-end="url(#arrow)" />
+          <text x="490" y="185" class="weight-label">w1 = {{w1}}</text>
+
+          <line x1="460" y1="350" x2="540" y2="270" marker-end="url(#arrow)" />
+          <text x="490" y="325" class="weight-label">w2 = {{w2}}</text>
+        </g>
+      </svg>
+
+      <div class="layer-column input-spacing" style="margin-left: 20px;">
+        <div class="node-circle input-node">
+          <span>X1</span>
+          <span class="node-subtext">{{ x1 }}</span>
+        </div>
+        <div class="node-circle input-node">
+          <span>X2</span>
+          <span class="node-subtext">{{ x2 }}</span>
+        </div>
+      </div>
+
+      <div class="layer-column hidden-spacing" style="margin-left: 55px;">
+        <div class="node-circle hidden1-node" [class.gradient-active-pulse]="currentStep >= 3">
+          <span>H11</span>
+          <span class="node-subtext">val: {{ h11 }}</span>
+          <span *ngIf="currentStep >= 3" class="node-subtext">∂L: {{ dL_dh11 | number:'1.4-4' }}</span>
+        </div>
+        <div class="node-circle hidden1-node" [class.gradient-active-pulse]="currentStep >= 3">
+          <span>H12</span>
+          <span class="node-subtext">val: {{ h12 }}</span>
+          <span *ngIf="currentStep >= 3" class="node-subtext">∂L: {{ dL_dh12 | number:'1.4-4' }}</span>
+        </div>
+      </div>
+
+      <div class="layer-column hidden-spacing" style="margin-left: 55px;">
+        <div class="node-circle hidden2-node" [class.gradient-active-pulse]="currentStep >= 2">
+          <span>H21</span>
+          <span class="node-subtext">val: {{ h21 }}</span>
+        </div>
+        <div class="node-circle hidden2-node" [class.gradient-active-pulse]="currentStep >= 2">
+          <span>H22</span>
+          <span class="node-subtext">val: {{ h22 }}</span>
+        </div>
+      </div>
+
+      <div class="layer-column" style="margin-right: 20px;">
+        <div class="node-circle output-node" [class.gradient-active-pulse]="currentStep >= 1">
+          <span>O (Pred)</span>
+          <span class="node-subtext" style="font-size:11px;">{{ pred }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar-column">
+      <div class="objective-card" [class.active-loss-state]="currentStep === 1">
+        <h3>Objective Loss</h3>
+        <div class="formula-block" style="background:#f8fafc; color:#475569;">L = 1/2 (exp - pred)²</div>
+        <div style="margin-top: 10px;" *ngIf="currentStep >= 1">
+          <p style="font-weight:700; color:#dc2626; margin:0;">∂L/∂pred = {{ dL_dpred }}</p>
+        </div>
+      </div>
+
+      <div class="blue-calc-card" [class.dimmed-layer]="currentStep < 2">
+        <h4>Layer 2 Partial Derivatives</h4>
+        <div class="formula-block">∂L/∂w1 = ∂L/∂pred • h21</div>
+        <p style="margin: 0 0 8px 0;">Evaluated: {{ dL_dw1 | number:'1.4-4' }}</p>
+
+        <div class="formula-block">∂L/∂wh12 = ∂L/∂pred • w2 • h11</div>
+        <p style="margin: 0;">Evaluated: {{ dL_dwh12 | number:'1.4-4' }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
